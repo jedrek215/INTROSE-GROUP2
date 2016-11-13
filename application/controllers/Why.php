@@ -1,7 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Why extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -19,18 +18,14 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-	{	
-		
-					$this->home();		
+	{
+		$this->home();
 	}
 
 	public function home(){
-		$this->load->model('dash_model', 'model');
+		$this->load->model('modellang');
 
-		if ($this->session->userdata('logged_in')){
-			$session_data = $this->session->userdata('logged_in');
-			$org = $session_data['username'];
-	
+		$org = 'JEMA';
 
 		$data['approved'] = $this->model->getActivitiyCount($org, 'approved');
 		$data['pending']= $this->model->getActivitiyCount($org, 'pending');
@@ -40,14 +35,11 @@ class Welcome extends CI_Controller {
 		$data['Academic'] = $this->model->get60_40ratio($org,'Academic');
 		$data['nonAcademic'] = $this->model->get60_40ratio($org,'non-Academic');
 		//$object = $data['approved'][0];
-		$data['orgName'] = $org;
+		
 
 	//	$data['org'] = $this->model->getAllOrgs();
 		$this->load->view('main', $data);
-		}
-		else{
-			redirect('Login', 'refresh');
-		}
+
 	}
 
 	public function dts(){
