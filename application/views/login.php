@@ -11,7 +11,8 @@
                             <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="Organization" name="username" />
                             <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
                             <div class="wrapper">
-                                <input type="submit" value="Sign in">
+                                <br>
+                                <input type="submit" value="Sign in" class="btn btn-success btn-sm" >
 
                         </div>
                     </div>          

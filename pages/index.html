@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Main</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="../vendor/jquery/jquery-3.1.1.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="../vendor/Chart.js"></script>
+</head>
 
 <body>
     <div id="wrapper">
@@ -13,11 +29,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Welcome">APS</a>
+                <a class="navbar-brand" href="index.html">APS</a>
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
-                <li><?php echo $orgName; ?></li>
+                <li>Org Name</li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -26,7 +42,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="Login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
@@ -36,13 +52,13 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="Welcome"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="dts_Cont"><i class="fa fa-table fa-fw"></i> DTS</a>
+                            <a href="dts.html"><i class="fa fa-table fa-fw"></i> DTS</a>
                         </li>
                         <li>
-                            <a href="Arts_Cont"><i class="fa fa-edit fa-fw"></i> ARTS</a>
+                            <a href="arts.html"><i class="fa fa-edit fa-fw"></i> ARTS</a>
                         </li>
                     </ul>
                 </div>
@@ -71,31 +87,19 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align: left">Approved</td>
-                                        <td style="text-align: left"><?php 
-                                                forEach($approved as $object){
-                                                echo $object->count;    
-                                                } ?></td>
+                                        <td style="text-align: left">10</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left">Late Approved</td>
-                                        <td style="text-align: left"><?php 
-                                                forEach($late_approved as $object){
-                                                echo $object->count;
-                                                } ?></td>
+                                        <td style="text-align: left">2</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left">Pending</td>
-                                        <td style="text-align: left"><?php 
-                                                forEach($pending as $object){
-                                                echo $object->count;
-                                                } ?></td>
+                                        <td style="text-align: left">4</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left">Denied</td>
-                                        <td style="text-align: left"><?php 
-                                                forEach($denied as $object){
-                                                echo $object->count;
-                                                } ?></td>
+                                        <td style="text-align: left">0</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -150,13 +154,7 @@
                                     labels: ["Academic Activities", "Non-Academic Activities"],
                                     datasets: [{
                                         label: '%',
-                                        data: [<?php 
-                                                forEach($Academic as $object){
-                                                echo $object->count;    
-                                                } ?>, <?php 
-                                                forEach($nonAcademic as $object){
-                                                echo $object->count;    
-                                                } ?>],
+                                        data: [6, 4],
                                         backgroundColor: [
                                             "#2ecc71",
                                             "#3498db",
@@ -227,7 +225,7 @@
                     ctx.font = '18px Arial';
                     ctx.textAlign = "center";
                     ctx.fillStyle = "#fff";
-                    self.data.datasets.forEach(function (dataset, datasetIndex) {               
+                    self.data.datasets.forEach(function (dataset, datasetIndex) {				
                         var total = 0, //total values to compute fraction
                             labelxy = [],
                             offset = Math.PI / 2, //start sector from top

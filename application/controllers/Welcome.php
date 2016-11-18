@@ -43,6 +43,7 @@ class Welcome extends CI_Controller {
 		$data['orgName'] = $org;
 
 	//	$data['org'] = $this->model->getAllOrgs();
+		$this->load->view('include/mainHead');
 		$this->load->view('main', $data);
 		}
 		else{
