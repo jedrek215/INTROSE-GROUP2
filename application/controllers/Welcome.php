@@ -39,6 +39,13 @@ class Welcome extends CI_Controller {
 
 		$data['Academic'] = $this->model->get60_40ratio($org,'Academic');
 		$data['nonAcademic'] = $this->model->get60_40ratio($org,'non-Academic');
+
+		$data['pushed'] = $this->model->getPushedthrough($org, 'pushed');
+		$data['notpushed'] = $this->model->getPushedthrough($org, 'not-pushed');
+
+		$data['Within'] = $this->model->getTimein($org, 'Within');
+		$data['notWithin'] = $this->model->getTimein($org, 'not-Within');
+
 		//$object = $data['approved'][0];
 		$data['orgName'] = $org;
 
