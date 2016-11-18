@@ -69,6 +69,51 @@
 
 		}
 
+		function getPushedthrough($orgname, $status){
+			if($status == 'Approved'){
+				$code = 'SELECT 
+						(SELECT COUNT(G.Title)
+						FROM gosm G, org O
+						where o.orgID = G.gosm_orgID and o.OrgName ='.'"'.$orgname.'"'.')-
+						(SELECT COUNT(*)
+						FROM (Select *
+							FROM submission S,  org O, gendetails G, astatus T, gosm A
+							WHERE O.orgname ='.'"'.$orgname.'"'.' and o.OrgID = G.Proj_OrgID and
+							  S.Sub_ProjectID = G.ProjectID and S.SubID = T.Stat_SubID and o.OrgID = A.Gosm_OrgID and
+           					    A.Title regexp G.ActTitle and
+							SubID= (SELECT MAX(SubID) 
+								from submission S1 where S.Sub_ProjectID = S1.Sub_ProjectID
+								and stat is not null) and stat = "Approved") as acts) as "pushedthrough";  ';	
+			}
+			else if($status == 'not-Approved'){
+				$code = 'SELECT 
+						(SELECT COUNT(G.Title)
+						FROM gosm G, org O
+						where o.orgID = G.gosm_orgID and o.OrgName ='.'"'.$orgname.'"'.')-
+						(SELECT COUNT(*)
+						FROM (Select *
+							FROM submission S,  org O, gendetails G, astatus T, gosm A
+							WHERE O.orgname ='.'"'.$orgname.'"'.' and o.OrgID = G.Proj_OrgID and
+							  S.Sub_ProjectID = G.ProjectID and S.SubID = T.Stat_SubID and o.OrgID = A.Gosm_OrgID and
+           					    A.Title regexp G.ActTitle and
+							SubID= (SELECT MAX(SubID) 
+								from submission S1 where S.Sub_ProjectID = S1.Sub_ProjectID
+								and stat is not null) and stat != "Approved") as acts) as "pushedthrough";  ';	
+			}
+
+			$query = $this->db->query($code);
+
+			
+
+			if($query->num_rows()>0){
+
+				return $query->result();
+			}else {
+				return NULL;
+			}
+
+		}
+
 	}
 
 
