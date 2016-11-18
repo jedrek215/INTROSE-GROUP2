@@ -115,7 +115,13 @@
                                     labels: ["Pushed Through Activities", "Non-Pushed Through Activities"],
                                     datasets: [{
                                         label: '%',
-                                        data: [12, 4],
+                                        data: [<?php 
+                                                forEach($pushed as $object){
+                                                echo $object->pushedthrough;    
+                                                } ?>, <?php 
+                                                forEach($notpushed as $object){
+                                                echo $object->pushedthrough;    
+                                                } ?>],
                                         backgroundColor: [
                                             "#2ecc71",
                                             "#3498db",
@@ -191,7 +197,13 @@
                                     labels: ["Activity Within Timing", "Activity Not Within Timing"],
                                     datasets: [{
                                         label: '%',
-                                        data: [6, 7],
+                                        data: [<?php 
+                                                forEach($Within as $object){
+                                                echo $object->within;    
+                                                } ?>, <?php 
+                                                forEach($notWithin as $object){
+                                                echo $object->within;    
+                                                } ?>],
                                         backgroundColor: [
                                             "#2ecc71",
                                             "#3498db",
@@ -210,6 +222,8 @@
                             };
                             var ctx = document.getElementById("timingChart").getContext("2d");
                             var myChart = new Chart(ctx, config);
+
+
                         </script>
                     </div>
                 </div>
