@@ -51,6 +51,7 @@ class Welcome extends CI_Controller {
 
 	//	$data['org'] = $this->model->getAllOrgs();
 		$this->load->view('include/mainHead');
+		$this->load->view('include/nav', $data);
 		$this->load->view('main', $data);
 		}
 		else{

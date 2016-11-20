@@ -1,68 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>DTS</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="vendor/jquery/jquery-3.1.1.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
-    <script src="dist/js/sb-admin-2.js"></script>
-    <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-</head>
-
 <body>
-
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">APS</a>
-            </div>
-            <!-- /.navbar-header -->
-           <ul class="nav navbar-top-links navbar-right">
-           <!---     <li><?php echo $orgName; ?></li>-->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="Login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="Welcome"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="dts_Cont"><i class="fa fa-table fa-fw"></i> DTS</a>
-                        </li>
-                        <li>
-                            <a href="Arts_Cont"><i class="fa fa-edit fa-fw"></i> ARTS</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="col-lg-12">
@@ -73,20 +12,26 @@
             <div class="col-lg-12">
                 <div class="panel panel-default text-center">
                     <div class="panel-heading">
+                    <form  role="search" action="dts_Cont" method = "post">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span id="search_concept">Filter by</span> <span class="caret"></span>
+                                    <span id="search_concept"></span><font id="filter">Filter by</font><span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#sample">Sample Filter</a></li>
+                                    <li><a id= "Filterby" href="#sample">Filter by</a></li>
+                                    <li><a id= "ST" href="#sample">Submission Type</a></li>
+                                    <li><a id= "Status" href="#sample">Status</a></li>
+
                                 </ul>
                             </div>
-                            <input type="hidden" name="search_param" value="all" id="search_param">         
-                            <input type="text" class="form-control" name="x" placeholder="Search term...">
+                            <input type="hidden" name="search_param" value="filterby" id="search_param">     
+                            <input type="hidden" name="search" value="yes" id="search_param">     
+                            <input id="inputText" type="text" class="form-control" name="x" placeholder="Search term...">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button id="Search" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
+                            </form>
                         </div><h3 class="panel-title"></h3>
                     </div>
                     <div class="panel-body bg-2">
@@ -98,10 +43,10 @@
                                 <th>Submission Type</th>
                                 <th>Activity Date Particulars</th>
                                 <th>Status</th>
+                                <th>More Info</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                </tr>
+                                <?php displayAsTable($orgName , $dts) ?>
                             </tbody>
                         </table>
                     </div>
@@ -109,5 +54,123 @@
             </div>
         </div>
     </div>
+
+   
+
+    <font id="hidden"></font>
+
+    <?php
+        $activities =0;
+        function displayAsTable($file_name, $activity){
+            $count = 0;
+            $activities = $activity;
+             foreach ($activities as $row){
+               
+              echo '<tr>';
+                
+                echo '<td>' . $row->SubID . '</td>';
+                echo '<td>' . $row->DateSubmitted . '</td>';
+                echo '<td id = "title" class = "$count">' . $row->ActTitle . '</td>';
+                echo '<td>' . $row->SubType . '</td>';
+                if($row->EndDate == NULL && $row->OneDate != NULL){
+                    echo '<td>' . $row->OneDate . '</td>';
+                }
+                else if($row->OneDate == NULL && $row->EndDate == NULL)
+                    echo '<td>' . $row->ActPart . '</td>';
+                else{
+                    echo '<td>' . $row->OneDate . ' —' . $row->EndDate . '</td>';
+                }
+                echo '<td>' . $row->Stat . '</td>';
+                 echo '<td>' . '<button type="button" class= "btn btn-primary" aria-label ="center" data-toggle="modal" data-target = "#modal-'.$count.'">
+                    <span class ="glyphicon glyphicon-info-sign" aria-hidden = "true"></span>
+                     </button>' . '</td>';
+              echo '<tr>';
+              makeModal($row,$count);
+                $count++;              
+            }
+            
+        }
+
+        function makeModal($data, $count){
+            echo '<div class ="container">';
+            echo '<div class = "modal" id= "modal-'.$count.'">';
+            echo    '<div class = "modal-dialog">';
+            echo    '<div class = "modal-content">';
+            echo        '<div class = "modal-header">';
+            echo            '<button type ="button" class = "close"data-dismiss= "modal">&times;</button>';
+            echo            '<h3 class="modal-title">' . $data->ActTitle . '</h3>';
+            echo        '</div>';
+            echo        '<div class = "modal-body" style= "text-align :left">';
+            echo            'Activity Type: ' . $data->ActType . '<br>';
+            echo                'Activity Nature: ' . $data->ActNature . '<br>';
+            echo                'Term: ' . $data->Term . '<br>';
+            echo                'Activity Duration: ' . $data->ActPart . '<br>';
+            echo                'Activity Start Date: ' . $data->OneDate . '<br>';
+            echo                'Activity End Date: ' . $data->EndDate . '<br>';
+            echo                'Activity Time: ' . $data->ActTime . '<br>';
+            echo                'Activity Venue: ' . $data->ActVenue . '<br>';
+            echo                'Tie Up: ' . $data->TieUp . '<br>';
+            echo                'Submission Type: ' . $data->SubType . '<br>';
+            echo                'Date Submitted: ' . $data->DateSubmitted . '<br>';
+            echo                'Date Approved: ' . $data->DateApproved . '<br>';
+            echo                'Status: ' . $data->Stat . '<br>';
+            echo                'Officer Name: ' . $data->OfficerName . '<br>';
+            echo                'Contact Number: ' . $data->ContNum . '<br>';
+            echo                'Email Address: ' . $data->EmailAdd . '<br>';
+            echo                'Checker: ' . $data->Checker . '<br>';
+            echo                'Remarks: ' . $data->Remarks . '<br>';
+            echo        '</div>';
+            echo        '<div class = "modal-footer">';
+            echo            '<a href="" class="btn btn-default" data-dismiss="modal">Close</a>';                        
+            echo        '</div>';
+            echo    '</div>';
+            echo   '</div>';
+            echo    '</div>';
+            echo '</div>';
+
+        }
+    ?>
+<script type="text/javascript">
+    base_url = '<?=base_url()?>';
+    $(document).ready(function(){   
+/*
+    $("#Search").click(function()
+    {       
+
+        console.log("CLICKED");
+     $.ajax({
+         type: "POST",
+         url: base_url + 'dts_Cont/filter', 
+         data: {text: $("#inputText").text(),
+                filterby: $("#filter").text()},  
+        dataType: 'json', 
+         
+         success: 
+              function(data){
+
+                  //as a debugging message.
+              }
+          });// you have missed this bracket
+     ;
+ });*/
+
+    $("#ST").click(function(){
+       $("#filter").html('Submission Type');
+       $("#search_param").attr("value" , "SubmissionType");
+    });
+     $("#Status").click(function(){
+        $("#filter").html('Status');
+       $("#search_param").attr("value" , "Status");
+    });
+     $("#Filterby").click(function(){
+        $("#filter").html('Filter by');
+    });
+ });
+
+
+</script>
+
+
 </body>
+
 </html>

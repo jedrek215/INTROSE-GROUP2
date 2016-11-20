@@ -1,68 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>ARTS</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
-    <script src="vendor/jquery/jquery-3.1.1.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
-    <script src="dist/js/sb-admin-2.js"></script>
-    <script src="vendor/jquery/jquery.bootstrap.wizard.min.js"></script>
-    <script src="vendor/bootstrap-datepicker.min.js"></script>
-</head>
+
 
 <body>
     <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">APS</a>
-            </div>
-            <!-- /.navbar-header -->
-             <ul class="nav navbar-top-links navbar-right">
-           <!---     <li><?php echo $orgName; ?></li>-->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="Login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="Welcome"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="dts_Cont"><i class="fa fa-table fa-fw"></i> DTS</a>
-                        </li>
-                        <li>
-                            <a href="Arts_Cont"><i class="fa fa-edit fa-fw"></i> ARTS</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+      <!-- Navigation -->
+ 
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="col-lg-12">
@@ -72,189 +15,459 @@
             </div>
             <!-- ARTS Form -->
             <div class="col-xs-4">
-                <div id="rootwizard">
-                    <!--navbar starts -->
-                    <div class="navbar">
-                        <div class="navbar-inner">
-                            <div class="container">
-                                <ul>
-                                    <li><a href="#tab1" data-toggle="tab">General Details</a></li>
-                                    <li><a href="#tab2" data-toggle="tab">Activity Details</a></li>
-                                    <li><a href="#tab3" data-toggle="tab">Officer Details</a></li>
-                                    <li><a href="#tab4" data-toggle="tab">Summary</a></li>
-                                </ul>
+               
+              <?php  
+                        $attributes = array('id' => 'artsForm', 'class' => 'jsform');
+                        echo form_open($url_subType.'/validateSub', $attributes); 
+                ?>
+
+                       
+
+                    <div id="rootwizard">
+                        <!--navbar starts -->
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="container">
+                                    <ul>
+                                        <li><a href="#tab1" data-toggle="tab">General Details</a></li>
+                                        <li><a href="#tab2" data-toggle="tab">Activity Details</a></li>
+                                        <li><a href="#tab3" data-toggle="tab">Officer Details</a></li>
+                                    </ul>
+                                </div>
                             </div>
+                        </div>
+                        <!--navbar ends -->
+                        <!-- form wizard content starts -->
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab1">
+                                <div class="form-group">
+                                    <input type="hidden" name="Timestamp" id="Timestamp" value="<?php echo $timestamp;?>">
+                        <input type="hidden" name="SubType" id="SubType" value="<?php echo $subType;?>">
+                        <input type="hidden" name="OrgName" id="OrgName" value="<?php echo $orgName;?>">
+
+                                    <label for="actTitle">Submission Type</label>
+                                    <div><h4><u><?php echo $subType; ?></u></h4></div>
+
+                                    <label for="actTitle">Activity Title</label>
+                                    <input type="text" class="form-control" name="ActTitle" required id="ActTitle"/>
+                                    <label> </label>
+
+                                    <label for="ActPart">Activity Date Particulars</label>
+                                    <select class="form-control" name="ActPart" id="ActPart_select" onchange="showHidden(this)">
+                                        <option value="Year Long">Year Long</option>
+                                        <option value="Term Long">Term Long</option>        
+                                        <option value="One Day">One Day</option>
+                                        <option value="Not One Day">Not One Day</option>                    
+                                    </select>
+
+                                   
+                                    <label> </label>
+                                    <label for="tie-up">If tie-up, please indicate other orgs: </label>
+                                    <br>
+                                    <small>(Please indicate "N/A" if not applicable) </small>
+                                    <input type="text" class="form-control" name="TieUp" id="TieUp_select">
+
+                                    <label> </label><br>
+                                    <label for="term" name="termLabel" id="termLabel" style="visibility:hidden;">Term</label>
+                                    <select class="form-control" name="Term" id="Term_select" style="visibility:hidden;">
+                                        <option value=""> </option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>        
+                                        <option value="3">3</option>                                            
+                                    </select>
+
+                                     <label for="datepicker1" style="visibility:hidden;"> </label>
+                                    <div class="input-group">
+                                        <input class="form-control" id="datePicker1" name="datePicker1" placeholder="MM/DD/YYY" type="text" style="visibility:hidden;"/>
+                                        <span class="input-group-addon" name="dash" id="dash" style="visibility:hidden;">-</span>
+                                        <input class="form-control" id="datePicker2" name="datePicker2" placeholder="MM/DD/YYY" type="text" style="visibility:hidden;"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <div class="form-group">
+                                    <label for="actNature">Activity Nature</label>
+                                    <select class="form-control" name="ActNature" id="ActNature_select">
+                                        <option value ="Academic">Academic</option>
+                                        <option value ="Special Interest">Special Interest </option>
+                                        <option value ="Departmental Initiative">Departmental Initiative</option>       
+                                        <option value ="Fundraising">Fundraising</option>
+                                        <option value ="Community Engagement">Community Engagement</option>
+                                        <option value ="Organizational Development">Organizational Development</option>
+                                        <option value ="Issue Advocacy">Issue Advocacy</option>
+                                        <option value ="Lasallian Formation/Spiritual Growth">Lasallian Formation/Spiritual Growth</option>
+                                        <option value ="Outreach">Outreach</option>                                                 
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="actType">Activity Type</label>
+                                    <select class="form-control" name="ActType" id="ActType_select" onchange="if(this.value=='Other'){
+                                                                  this.form['Other'].style.visibility='visible';
+                                                                  }else if(this.value!='Other'){
+                                                                  this.form['Other'].style.visibility='hidden';
+                                                                  };">
+                                        <option value = "Academic Contest">Academic Contest</option>                         
+                                        <option value = "Non-Academic Contest">Non-Academic Contest</option>
+                                        <option value = "Distribution">Distribution</option>
+                                        <option value = "Seminar/ Workshops">Seminar/ Workshops</option>
+                                        <option value = "Publicity/ Awareness Campaign">Publicity/ Awareness Campaign</option>
+                                        <option value = "Meetings">Meetings</option>
+                                        <option value = "Spiritual Activity">Spiritual Activity</option>
+                                        <option value = "Recruitment/Audition">Recruitment/Audition</option>
+                                        <option value = "Recreation">Recreation</option>
+                                        <option value = "Other">Other</option>      
+                                    </select>
+                                    <label for="other"> </label>
+                                    <input type="text" class="form-control" name="Other" id="Other_select" style="visibility:hidden;"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="actTime">Activity Time</label>
+                                    <input type="text" class="form-control" name="ActTime" id="ActTime_select">
+                                </div>
+                                <div class="form-group">
+                                    <label for="actVenue">Activity Venue</label>
+                                    <input type="text" class="form-control" name="ActVenue" id="ActVenue_select">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                <div class="form-group">
+                                    <label for="subBy">Submitted By</label>
+                                    <input type="text" class="form-control" name="SubBy" id="SubBy_select">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactNum">Contact Number</label>
+                                    <input type="text" class="form-control" name="ContactNum" id="ContactNum_select">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="text" class="form-control" name="Email" id="subEmail_select">
+                                </div>
+                            </div>
+                             <ul class="pager wizard">
+                                <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                                <li class="previous"><a href="#">Previous</a></li>
+                                <li class="next" ><a href="#">Next</a></li>
+                                <li class="next finish" style="display:none;"><a href="" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"/>Summary</a></li>
+                             </ul>
+
+                    </div>  
+                </div>
+
+                    <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h3> Summary Page </h3>
+                    </div>
+                    <div class="modal-body">
+                            
+                            <div>
+                                <label>Submission Type:</label>
+                                <span id = res_SubType></span>
+                            </div>
+
+                            <div>
+                                <label>Activity Title:</label>
+                                <span id = res_ActTitle></span>
+                            </div>
+
+                            <div >
+                                <label>Activity Date Particulars:</label>
+                                <span id = res_ActPart></span>
+                            </div>
+                            <div>
+                                <label>Term:</label>
+                                <span id = res_Term></span>
+                            </div>
+                            <div >
+                                <label>Tie-up Orgs:</label>
+                                <span id = res_TieUp></span>
+                            </div>
+                            <div >
+                                <label>Activity Nature:</label>
+                                <span id = res_ActNature></span>
+                            </div>
+                            <div>
+                                <label>Activity Type:</label>
+                                <span id = res_ActType></span>
+                            </div>
+                            <div>
+                                <label>Activity Date:</label>
+                                <span id = res_ActDate></span> — 
+                                <span id = res_ActDate1></span>
+                            </div>
+                            <div>
+                                <label>Activity Time:</label>
+                                <span id = res_ActTime></span>
+                            </div>
+                            <div>
+                                <label>Activity Venue:</label>
+                                <span id = res_ActVenue></span>
+                            </div>
+                            <div>
+                                <label>Submitted by:</label>
+                                <span id = res_SubBy></span>
+                            </div>
+                            <div>
+                                <label>Contact Number:</label>
+                                <span id = res_Contact></span>
+                            </div>
+                            <div>
+                                <label>Email Address:</label>
+                                <span id = res_EmailAdd></span>
+                    </div>
+                
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type ="submit" value="Submit" id="submit" class="btn btn-success" data-toggle="modal" data-target ="#submission" >
                         </div>
                     </div>
-                    <!--navbar ends -->
-                    <!-- form wizard content starts -->
-                    <div class="tab-content">
-                        <div class="tab-pane" id="tab1">
-                            <div class="form-group">
-                                <label for="subType">Submission Type</label>
-                                <select class="form-control" name="subType" id="subType_select">
-                                    <option>Initial Submission</option>
-                                    <option>Pended</option>		
-                                    <option>In Case of Change</option>
-                                    <option>Not in GOSM</option>																											
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="actTitle">Activity Title</label>
-                                <input type="text" class="form-control" id="actTitle">
-                            </div>
-                            <div class="form-group">
-                                <label for="datePart">Activity Date Particulars</label>
-                                <select class="form-control" name="datePart" id="datePart_select">
-                                    <option>Year Long</option>
-                                    <option>Term Long</option>		
-                                    <option>One Day</option>
-                                    <option>More Than One Day</option>																											
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="subType">Term</label>
-                                <select class="form-control" name="term" id="term_select">
-                                    <option>1</option>
-                                    <option>2</option>		
-                                    <option>3</option>																											
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tie-up">If tie-up, please indicate other orgs: </label>
-                                <small>(Please indicate "N/A" if not applicable) </small>
-                                <input type="text" class="form-control" id="tie-up">
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab2">
-                            <div class="form-group">
-                                <label for="actNature">Activity Nature</label>
-                                <select class="form-control" name="actNature" id="actNature_select">
-                                    <option>Academic</option>
-                                    <option>Organizational Development</option>		
-                                    <option>Issue Advocacy</option>
-                                    <option>Special Interest</option>																											
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="actType">Activity Type</label>
-                                <select class="form-control" name="actType" id="actType_select">
-                                    <option>Choice</option>																											
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="datepicker1">Activity Date</label>
-                                <div class="input-group">
-                                    <input class="form-control" id="datepicker1" name="datepicker1" placeholder="MM/DD/YYY" type="text"/>
-                                    <span class="input-group-addon">-</span>
-                                    <input class="form-control" id="datepicker2" name="datepicker2" placeholder="MM/DD/YYY" type="text"/>
-                                </div>
-                                <script>
-                                    $(document).ready(function(){
-                                        var date_input=$('input[name="datepicker1"]');
-                                        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                                        date_input.datepicker({
-                                            format: 'mm/dd/yyyy',
-                                            container: container,
-                                            todayHighlight: true,
-                                            autoclose: true,
-                                        })
-                                    })
-                                </script>
-                                <script>
-                                    $(document).ready(function(){
-                                        var date_input=$('input[name="datepicker2"]');
-                                        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                                        date_input.datepicker({
-                                            format: 'mm/dd/yyyy',
-                                            container: container,
-                                            todayHighlight: true,
-                                            autoclose: true,
-                                        })
-                                    })
-                                </script>
-                            </div>
-                            <div class="form-group">
-                                <label for="actTime">Activity Time</label>
-                                <input type="text" class="form-control" id="actTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="actVenue">Activity Venue</label>
-                                <input type="text" class="form-control" id="actVenue">
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab3">
-                            <div class="form-group">
-                                <label for="subBy">Submitted By</label>
-                                <input type="text" class="form-control" id="subBy">
-                            </div>
-                            <div class="form-group">
-                                <label for="contactNum">Contact Number</label>
-                                <input type="text" class="form-control" id="contactNum">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="text" class="form-control" id="email">
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab4">
-                            <div class="form-group">
-                                <label>Submission Type</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Title</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Date Particulars</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Term</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Tie-up Orgs</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Nature</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Type</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Date</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Time</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity Venue</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Submitted by</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Contact Number</label>
-                            </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                            </div>
-                        </div>
-                        <ul class="pager wizard">
-                            <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                            <li class="previous"><a href="#">Previous</a></li>
-                            <li class="next last" style="display:none;"><a href="#">Last</a></li>
-                            <li class="next"><a href="#">Next</a></li>
-                            <li class="submit"><a href="#">Submit</a></li>
-                        </ul>
-                    </div>	
                 </div>
-                <!-- form wizard content ends -->
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#rootwizard').bootstrapWizard();
-                    });
-                </script>
             </div>
         </div>
-    </div>
+         </div>
+        <div class="modal fade" id="submission" role="dialog" aria-labelledby="myModal" aria-hidden="true" >
+             <div class="modal-dialog">
+                <div class="modal-content">
+                <div id ="modal2" class="modal-body">
+                        <label style="font-size :20px">Submission</label>
+                        <button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+                        <hr>
+                    
+                    <div style ="float: center;"</div>
+                    </div>
+                </div>
+                </div>
+        </div>
+            </form>
+       
+          <!-- form wizard content ends -->
+  
+            <body>
+                <script type="text/javascript">
+                
+                 var $validator = $("#artsForm").validate({
+                errorClass: "my-error-class",
+                ignore: [],
+                rules: {
+                    ActTitle: {
+                        required: true
+                    },
+                    TieUp: {
+                        required: true
+                    },
+                    datePicker1: {
+                        required: false
+                    },
+                    datePicker2: {
+                        required: false
+                    },
+                    ActTime: {
+                        required: true
+                    },
+                    ActVenue: {
+                        required: true
+                    },
+                    SubBy: {
+                        required: true
+                    },
+                    ContactNum: {
+                        required: true
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Other: {
+                        required: false
+                    }
+                }
+                 }); 
+
+                    $('#rootwizard').bootstrapWizard({
+                          'tabClass': 'nav nav-pills',
+                        onTabShow: function(tab, navigation, index) {
+                            var $total = navigation.find('li').length;
+                            var $current = index+1;
+                            var $percent = ($current/$total) * 100;
+                            $('#rootwizard').find('.bar').css({width:$percent+'%'});
+                            
+                            // If it's the last tab then hide the last button and show the finish instead
+                            if($current >= $total) {
+                                $('#rootwizard').find('.pager .next').hide();
+                                $('#rootwizard').find('.pager .finish').show();
+                                $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                            } else {
+                                $('#rootwizard').find('.pager .next').show();
+                                $('#rootwizard').find('.pager .finish').hide();
+                            }
+                          },
+                        'onShow': function(tab, navigation, index) {
+                            var $valid = $("#artsForm").valid();
+                            if($valid)  {
+                                 $validator.focusInvalid();
+                                return true;
+                            }
+                        },
+                        'onFinish': function(tab, navigation, index) {
+                            var $valid = $("#artsForm").valid();
+                            if(!$valid)  {
+                                 $validator.focusInvalid();
+                                return false;
+                            }
+                        },
+                        onTabClick: function(tab, navigation, index) {
+                        return false;
+                        }
+
+                    }); 
+
+
+                </script>
 </body>
+</body>
+  
+    
+    <script>
+        function showHidden(input){
+            var datePicker1 = document.getElementById("datePicker1");
+            var dash = document.getElementById("dash");
+            var datePicker2 = document.getElementById("datePicker2");
+            var termLabel = document.getElementById("termLabel");
+            var term = document.getElementById("Term_select");
+            
+            if(input.value=='Year Long'){
+                datePicker1.style.visibility='hidden';
+                dash.style.visibility='hidden';
+                datePicker2.style.visibility='hidden';
+                termLabel.style.visibility='hidden';
+                term.style.visibility='hidden';
+            }
+            else if(input.value=='Term Long'){
+                datePicker1.style.visibility='hidden';
+                datePicker1.style.visibility='hidden';
+                dash.style.visibility='hidden';
+                datePicker2.style.visibility='hidden';
+                termLabel.style.visibility='visible';
+                term.style.visibility='visible';
+            }
+            else if(input.value=='One Day'){
+                datePicker1.style.visibility='visible';
+                dash.style.visibility='hidden';
+                datePicker2.style.visibility='hidden';
+                termLabel.style.visibility='visible';
+                term.style.visibility='visible';
+            }
+            else if(input.value=='Not One Day'){
+                datePicker1.style.visibility='visible';
+                dash.style.visibility='visible';
+                datePicker2.style.visibility='visible';
+                termLabel.style.visibility='visible';
+                term.style.visibility='visible';
+            };
+        };   
+    </script>
+    <!-- DatePicker Script -->
+    <script>
+        $(document).ready(function(){
+            var date_input=$('input[name="datePicker1"]');
+            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'yyyy-mm-dd',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+        })
+    </script>
+    <script>
+        $(document).ready(function(){
+            var date_input=$('input[name="datePicker2"]');
+            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'yyyy-mm-dd',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+                                        })
+    </script>
+    <!-- Form Validation Script -->
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+            $('#ActPart').on('change', function() {
+                if( $.trim( this.value ) === 'Year Long' ) {
+                    $('#datePicker1').val('').prop('disabled', true).closest('p').hide();
+                    $('#dash').val('').prop('disabled', true).closest('p').hide();
+                    $('#datePicker2').val('').prop('disabled', true).closest('p').hide();
+                } else if ($.trim( this.value ) === 'Term Long'){
+                    $('#datePicker1').val('').prop('disabled', true).closest('p').hide();
+                    $('#dash').val('').prop('disabled', true).closest('p').hide();
+                    $('#datePicker2').val('').prop('disabled', true).closest('p').hide();
+                } else if ($.trim( this.value ) === 'One Day'){
+                    $('#datePicker1').prop('disabled', false).closest('p').show();
+                    $('#dash').val('').prop('disabled', true).closest('p').hide();
+                    $('#datePicker2').val('').prop('disabled', true).closest('p').hide();
+                } else if ($.trim( this.value ) === 'Not One Day'){
+                    $('#datePicker1').prop('disabled', false).closest('p').show();
+                    $('#dash').val('').prop('disabled', false).closest('p').show();
+                    $('#datePicker2').val('').prop('disabled', true).closest('p').hide();
+                }
+            });
+           
+        });
+               $('#submitBtn').click(function() {
+                         /* when the button in the form, display the entered values in the modal */
+                         $('#res_SubType').text($('#SubType').val());
+                         $('#res_ActVenue').text($('#ActVenue_select').val());
+                         $('#res_ActTime').text($('#ActTime_select').val());
+                         $('#res_ActDate1').text($('#datepicker2').val());
+                         $('#res_ActDate').text($('#datepicker1').val());
+                         $('#res_ActNature').text($('#ActNature_select').val());
+                         $('#res_ActTitle').text($('#ActTitle').val());
+                         $('#res_Contact').text($('#ContactNum_select').val());
+                         $('#res_TieUp').text($('#TieUp_select').val());
+                         $('#res_Term').text($('#Term_select').val());
+                         $('#res_ActPart').text($('#ActPart_select').val());
+                         $('#res_EmailAdd').text($('#subEmail_select').val());
+                         $('#res_ActType').text($('#ActType_select').val());
+                         $('#res_SubBy').text($('#SubBy_select').val());
+                    });
+                
+                    
+      </script>
+
+     <script>
+        $(document).ready(function(){
+            $('form.jsform').on('submit', function(form){
+                form.preventDefault();
+                $('#confirm-submit').modal('toggle');
+                /*$.post('<?php echo $url_subType."/validateSub";?>',, function(data){
+                        console.log(data);
+                        $('#modal2 div').html(data);
+
+                });*/
+                $.ajax({
+                    data: $('form.jsform').serialize(),
+                 
+                    method: "post",
+                    url: "<?php echo $url_subType."/validateSub";?>",
+                    success: function(data){
+                         console.log(data);
+                        $('#modal2 div').html(data);
+
+                    },
+                    error: function(data){
+                        console.log(data);
+                        $('#modal2 div').html(data);
+
+                    }
+
+                });
+
+            });
+     });
+    </script>
 </html>

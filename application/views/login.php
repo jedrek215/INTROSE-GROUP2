@@ -19,10 +19,5 @@
                 </div>
             </div>
         </div>
-		<script>
-			function logIn(){
-				window.location = 'index.html';
-			}
-		</script>
     </body>
 </html>
