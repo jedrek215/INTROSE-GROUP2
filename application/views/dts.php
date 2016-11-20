@@ -64,6 +64,7 @@
         function displayAsTable($file_name, $activity){
             $count = 0;
             $activities = $activity;
+            if($activities){
              foreach ($activities as $row){
                
               echo '<tr>';
@@ -88,6 +89,7 @@
               makeModal($row,$count);
                 $count++;              
             }
+        }
             
         }
 
