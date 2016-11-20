@@ -54,7 +54,9 @@
 	   				FROM Submission S, gendetails G, org O
 	   				Where S.Sub_ProjectID = '.'"'.$ProjectID.'"'.'and
 	   				O.orgID = G.Proj_OrgID and 
-	   				o.OrgName ='.'"'.$OrgName.'"'.'
+	   				o.OrgName ='.'"'.$OrgName.'"'.' and
+	   				S.SubID= (SELECT MAX(SubID) 
+					from submission S1 where S.Sub_ProjectID = S1.Sub_ProjectID)
 	   				limit 1';
 	   		$query = $this->db->query($code);
 	   

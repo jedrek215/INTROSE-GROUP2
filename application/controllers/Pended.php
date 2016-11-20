@@ -86,7 +86,7 @@ Class Pended extends CI_Controller{
 								 }
 							 	else //else getSubID
 								   {
-								  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'Close'.'</button>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+								  	echo '<div class="success">'.'Submission Failed'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
 								   }
 
 
@@ -94,12 +94,12 @@ Class Pended extends CI_Controller{
 				 }
 				 		else // else getProjectID
 						   {
-						  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'Error'. '<br>'. 'Close'.'</button>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+						  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'Error'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
 						   }
 				}
 		 	else // else checkTitle
 			   {
-			  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'No Activity Title Found'. 'Close'.'</button>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+			  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'No Activity Title Found'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
 			   }
 		   }
 
@@ -107,7 +107,7 @@ Class Pended extends CI_Controller{
 		}
 			
 	   else{ //Else getOrgID
-	  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'Close'.'</button>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+	  	echo '<div class="success">'.'Submission Failed'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
 	   	   }	
 		
 	} 	

@@ -89,8 +89,7 @@
               makeModal($row,$count);
                 $count++;              
             }
-        }
-            
+            }
         }
 
         function makeModal($data, $count){
