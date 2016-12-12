@@ -3,6 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="<?php echo base_url("/vendor/bootstrap/css/bootstrap.min.css");?>" rel="stylesheet">
+      <link href="<?php echo base_url("/dist/css/customNav.css");?>" rel="stylesheet">
         <script src="<?php echo base_url("/vendor/jquery/jquery-3.1.1.min.js");?>"></script>
         <script src="<?php echo base_url("/vendor/bootstrap/js/bootstrap.min.js");?>"></script>
 

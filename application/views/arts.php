@@ -25,17 +25,17 @@
 
                     <div id="rootwizard">
                         <!--navbar starts -->
-                        <div class="navbar">
-                            <div class="navbar-inner">
-                                <div class="container">
-                                    <ul>
-                                        <li><a href="#tab1" data-toggle="tab">General Details</a></li>
-                                        <li><a href="#tab2" data-toggle="tab">Activity Details</a></li>
-                                        <li><a href="#tab3" data-toggle="tab">Officer Details</a></li>
-                                    </ul>
+                         <div class="navbar">
+                                <div class="navbar-inner">
+                                    <div class="container">
+                                        <ul>
+                                            <li class="inactive"><a href="#tab1" data-toggle="tab">General Details</a></li>
+                                            <li class="inactive"><a href="#tab2" data-toggle="tab">Activity Details</a></li>
+                                            <li class="inactive"><a href="#tab3" data-toggle="tab">Officer Details</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <!--navbar ends -->
                         <!-- form wizard content starts -->
                         <div class="tab-content">
@@ -44,12 +44,13 @@
                                     <input type="hidden" name="Timestamp" id="Timestamp" value="<?php echo $timestamp;?>">
                         <input type="hidden" name="SubType" id="SubType" value="<?php echo $subType;?>">
                         <input type="hidden" name="OrgName" id="OrgName" value="<?php echo $orgName;?>">
+                        <input type="hidden" name="TermID" id="TermID" value="<?php echo $termID;?>">
 
                                     <label for="actTitle">Submission Type</label>
                                     <div><h4><u><?php echo $subType; ?></u></h4></div>
 
                                     <label for="actTitle">Activity Title</label>
-                                    <input type="text" class="form-control" name="ActTitle" required id="ActTitle"/>
+                                    <input type="text" class="form-control" name="ActTitle" id="ActTitle"/>
                                     <label> </label>
 
                                     <label for="ActPart">Activity Date Particulars</label>
@@ -231,11 +232,9 @@
              <div class="modal-dialog">
                 <div class="modal-content">
                 <div id ="modal2" class="modal-body">
-                        <label style="font-size :20px">Submission</label>
-                        <button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
-                        <hr>
+                        
                     
-                    <div style ="float: center;"</div>
+                    <div style ="float: center;"></div>
                     </div>
                 </div>
                 </div>
@@ -244,7 +243,6 @@
        
           <!-- form wizard content ends -->
   
-            <body>
                 <script type="text/javascript">
                 
                  var $validator = $("#artsForm").validate({
@@ -285,50 +283,47 @@
                 }
                  }); 
 
-                    $('#rootwizard').bootstrapWizard({
-                          'tabClass': 'nav nav-pills',
-                        onTabShow: function(tab, navigation, index) {
-                            var $total = navigation.find('li').length;
-                            var $current = index+1;
-                            var $percent = ($current/$total) * 100;
-                            $('#rootwizard').find('.bar').css({width:$percent+'%'});
-                            
-                            // If it's the last tab then hide the last button and show the finish instead
-                            if($current >= $total) {
-                                $('#rootwizard').find('.pager .next').hide();
-                                $('#rootwizard').find('.pager .finish').show();
-                                $('#rootwizard').find('.pager .finish').removeClass('disabled');
-                            } else {
-                                $('#rootwizard').find('.pager .next').show();
-                                $('#rootwizard').find('.pager .finish').hide();
-                            }
-                          },
-                        'onShow': function(tab, navigation, index) {
-                            var $valid = $("#artsForm").valid();
-                            if($valid)  {
-                                 $validator.focusInvalid();
-                                return true;
-                            }
-                        },
-                        'onFinish': function(tab, navigation, index) {
-                            var $valid = $("#artsForm").valid();
-                            if(!$valid)  {
-                                 $validator.focusInvalid();
-                                return false;
-                            }
-                        },
-                        onTabClick: function(tab, navigation, index) {
-                        return false;
-                        }
-
-                    }); 
+                   $('#rootwizard').bootstrapWizard({
+            'tabClass': 'nav nav-pills',
+            onTabShow: function(tab, navigation, index) {
+                var $total = navigation.find('li').length;
+                var $current = index+1;
+                var $percent = ($current/$total) * 100;
+                $('#rootwizard').find('.bar').css({width:$percent+'%'});                        
+                // If it's the last tab then hide the last button and show the finish instead
+                if($current >= $total) {
+                    $('#rootwizard').find('.pager .next').hide();
+                    $('#rootwizard').find('.pager .finish').show();
+                    $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                } else {
+                    $('#rootwizard').find('.pager .next').show();
+                    $('#rootwizard').find('.pager .finish').hide();
+                }
+            },
+            'onShow': function(tab, navigation, index) {
+                var $valid = $("#artsForm").valid();
+                if($valid)  {
+                    $validator.focusInvalid();
+                    return true;
+                }
+            },
+            'onFinish': function(tab, navigation, index) {
+                var $valid = $("#artsForm").valid();
+                if(!$valid)  {
+                    $validator.focusInvalid();
+                    return false;
+                }
+            },
+            onTabClick: function(tab, navigation, index) {
+                return false;
+            },
+        }); 
 
 
                 </script>
 </body>
-</body>
   
-    
+  
     <script>
         function showHidden(input){
             var datePicker1 = document.getElementById("datePicker1");
@@ -372,26 +367,42 @@
     <script>
         $(document).ready(function(){
             var date_input=$('input[name="datePicker1"]');
+            var date = new Date();
+            date.setDate(date.getDate()-1);
             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
             date_input.datepicker({
                 format: 'yyyy-mm-dd',
                 container: container,
                 todayHighlight: true,
                 autoclose: true,
+                startDate: date,
             })
         })
     </script>
     <script>
         $(document).ready(function(){
             var date_input=$('input[name="datePicker2"]');
+            var date = new Date();
+            date.setDate($('#datePicker1').datepicker("getDate"));
             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
             date_input.datepicker({
                 format: 'yyyy-mm-dd',
                 container: container,
                 todayHighlight: true,
                 autoclose: true,
+                startDate: date,
             })
                                         })
+    </script>
+    <script>
+        var dateToday = new Date();
+        $(function(){
+            $("datePicker1").datepicker({
+                numberOfMonths: 3,
+                showButtonPanel: true,
+                minDate: dateToday
+            });
+        });
     </script>
     <!-- Form Validation Script -->
 
@@ -423,8 +434,8 @@
                          $('#res_SubType').text($('#SubType').val());
                          $('#res_ActVenue').text($('#ActVenue_select').val());
                          $('#res_ActTime').text($('#ActTime_select').val());
-                         $('#res_ActDate1').text($('#datepicker2').val());
-                         $('#res_ActDate').text($('#datepicker1').val());
+                         $('#res_ActDate1').text($('#datePicker2').val());
+                         $('#res_ActDate').text($('#datePicker1').val());
                          $('#res_ActNature').text($('#ActNature_select').val());
                          $('#res_ActTitle').text($('#ActTitle').val());
                          $('#res_Contact').text($('#ContactNum_select').val());
@@ -436,8 +447,9 @@
                          $('#res_SubBy').text($('#SubBy_select').val());
                     });
                 
-                    
+                        
       </script>
+
 
      <script>
         $(document).ready(function(){

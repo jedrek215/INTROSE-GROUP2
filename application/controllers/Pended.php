@@ -14,6 +14,19 @@ Class Pended extends CI_Controller{
 		if ($this->session->userdata('logged_in')){
 			$session_data = $this->session->userdata('logged_in');
 			$org = $session_data['username'];
+
+			$this->load->model('SchoolYear_Model');
+
+			$query = $this->SchoolYear_Model->getSchoolYear();
+					if($query){
+						foreach($query as $row){
+						$data = array('termID' => $row->termID,
+									  'SchoolYear' => $row->schoolyear,
+									  'SchoolTerm' => $row->schoolterm,
+									  'Start' => date('F d, Y', strtotime($row->start)),
+									  'End' =>date('F d, Y', strtotime($row->end)));
+						}
+					}
 				$data['orgName'] = $org;
 				$data['subType'] = "Pended";
 
@@ -21,9 +34,9 @@ Class Pended extends CI_Controller{
                 $time = time();
                 $data['timestamp'] = mdate($datestring, $time);	
                 $data['url_subType'] = current_url() ;
-				$this->load->view('include/artsHead');
-				$this->load->view('include/nav', $data);
-				$this->load->view('arts1', $data);
+				$this->load->view('include/ArtsHead');
+				$this->load->view('include/Nav_Org', $data);
+				$this->load->view('Arts1', $data);
 		}
 
 	}
@@ -39,18 +52,18 @@ Class Pended extends CI_Controller{
 
 	if($this->form_validation->run() == TRUE) 
 	{
-		$this->load->model('arts_model');
+		$this->load->model('Arts_Model');
 		
-		$result = $this->arts_model->getOrgID( $this->input->post('OrgName'));
+		$result = $this->Arts_Model->getOrgID( $this->input->post('OrgName'));
 	   if($result) {
 		    foreach($result as $row)
 		    {
 		    $Proj_OrgID = $row->orgID;
-		    $check = $this->arts_model->checkTitle($this->input->post('ActTitle'),$this->input->post('OrgName'));
+		    $check = $this->Arts_Model->checkTitle($this->input->post('ActTitle'),$this->input->post('OrgName'), $this->input->post('TermID'));
 			if($check) {
 
 
-				$result1 = $this->arts_model->getProjID($this->input->post('ActTitle'), $this->input->post('OrgName'));
+				$result1 = $this->Arts_Model->getProjID($this->input->post('ActTitle'), $this->input->post('OrgName'), $this->input->post('TermID'));
 					 if($result1){
 					 		foreach ($result1 as $row)
 					 		{
@@ -63,7 +76,7 @@ Class Pended extends CI_Controller{
 
 					 			$this->db->insert('Submission', $sub);
 
-							$result2 = $this->arts_model->getSubID($ProjID, $this->input->post('OrgName'));
+							$result2 = $this->Arts_Model->getSubID($ProjID, $this->input->post('OrgName'), $this->input->post('TermID'));
 								 if($result2){
 								 		foreach ($result2 as $row)
 								 		{
@@ -81,12 +94,30 @@ Class Pended extends CI_Controller{
 								 				'Stat' => 'Pending');
 								 			$this->db->insert('astatus', $stat);
 
-								 			echo '<div class="success">'.'Your submission has been successfully created'. '<br>'. '<a href="dts_Cont" class="btn btn-default" >'.'Proceed to DTS'.'</a>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+								 			echo '<label style="font-size :20px">Submission</label>
+         										   <a href="Org_Cont" class="btn btn-default" style="float:right">Home</a>
+           											 <hr>
+           											 <div class="success" style="text-align: center;">
+  		  											Submission has been successfully created!<br>
+								  		  			</div>
+  										 			<div class="modal-footer">
+  		 											<a href="DtsOrg_Cont" class="btn btn-default">Proceed to DTS</a>
+  		 											<a href="NotGosm" class="btn btn-default">Submit Again</a>
+  		 											</div>';
 						}
 								 }
 							 	else //else getSubID
 								   {
-								  	echo '<div class="success">'.'Submission Failed'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+								  	 	echo '<label style="font-size :20px">Submission</label>
+											<button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+											<hr>
+								  	 		<div class="success" style="text-align: center;">
+	  		  								Submission Failed<br>
+	  		  								Errror in Accessing your submission
+				  		  					</div>
+	  					 					<div class="modal-footer">
+	  		 								<a href="NotGosm" class="btn btn-default">Submit Again</a>
+	  		 								</div>';
 								   }
 
 
@@ -94,12 +125,31 @@ Class Pended extends CI_Controller{
 				 }
 				 		else // else getProjectID
 						   {
-						  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'Error'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+						  	echo '<label style="font-size :20px">Submission</label>
+								  <button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+									<hr>
+						  			<div class="success" style="text-align: center;">
+	  		  						Submission Failed<br>
+	  		  						Error accessing your activity 
+				  		  			</div>
+	  					 			<div class="modal-footer">
+	  		 						<a href="NotGosm" class="btn btn-default">Submit Again</a>
+	  		 						</div>';
+
 						   }
 				}
 		 	else // else checkTitle
 			   {
-			  	echo '<div class="success">'.'Submission Failed'. '<br>'. 'No Activity Title Found'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+			  	echo '<label style="font-size :20px">Submission</label>
+						<button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+						<hr>
+			  			<div class="success" style="text-align: center;">
+	  		  			Submission Failed<br>
+	  		  			No Title of Activity Found!
+	  		  			</div>
+	  		 			<div class="modal-footer">
+	  		 			<a href="NotGosm" class="btn btn-default">Submit Again</a>
+	  		 			</div>';
 			   }
 		   }
 
@@ -107,13 +157,25 @@ Class Pended extends CI_Controller{
 		}
 			
 	   else{ //Else getOrgID
-	  	echo '<div class="success">'.'Submission Failed'. '<br>'. '<br>'. '<a href="Pended" class="btn btn-default" >'.'Submit Again'.'</a>'.'</div>';
+	  	echo '<label style="font-size :20px">Submission</label>
+				<button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+				<hr>
+	  			<div class="success" style="text-align: center;">
+  		 		 Submission Failed<br>
+  		 		 Error accessing your Organization
+  		  		</div>
+  		  		<div class="modal-footer">
+  		  		<a href="NotGosm" class="btn btn-default">Submit Again</a>
+  		  		</div>';
 	   	   }	
 		
 	} 	
 	else { 	//Else Form Validation
 		//Form Validation FAILED
-		echo '<div class="error">'.validation_errors().'</div>';
+		echo '<label style="font-size :20px">Submission</label>
+			<button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
+			<hr>
+			<div class="error">'.validation_errors().'</div>';
 		}	
 	}
 		

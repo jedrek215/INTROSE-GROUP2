@@ -8,6 +8,7 @@
     <link href="<?php echo base_url("/vendor/bootstrap/css/bootstrap.min.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("vendor/metisMenu/metisMenu.min.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("/dist/css/sb-admin-2.css");?>" rel="stylesheet">
+    <link href="<?php echo base_url("/dist/css/customNav.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("/vendor/font-awesome/css/font-awesome.min.css");?>" rel="stylesheet" type="text/css">
     <script src="<?php echo base_url("/vendor/jquery/jquery-3.1.1.min.js");?>"></script>
     <script src="<?php echo base_url("/vendor/bootstrap/js/bootstrap.min.js");?>"></script>

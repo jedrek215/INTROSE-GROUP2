@@ -170,11 +170,8 @@
              <div class="modal-dialog">
                 <div class="modal-content">
                 <div id ="modal2" class="modal-body">
-                        <label style="font-size :20px">Submission</label>
-                        <button  align = "right"type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button><br>
-                        <hr>
-                    
-                    <div style ="float: center;"</div>
+                        
+                       
                     </div>
                 </div>
                 </div>

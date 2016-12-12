@@ -13,6 +13,7 @@
     <link href="<?php echo base_url("/vendor/font-awesome/css/font-awesome.min.css");?>" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url("/vendor/datatables-plugins/dataTables.bootstrap.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("/vendor/datatables-responsive/dataTables.responsive.css");?>" rel="stylesheet">
+    <link href="<?php echo base_url("/dist/css/customNav.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("/vendor/bootstrap/css/custom1.css");?>" rel="stylesheet">
     <script src="<?php echo base_url("/vendor/jquery/jquery-3.1.1.min.js");?>"></script>
     <script src="<?php echo base_url("/vendor/bootstrap/js/bootstrap.min.js");?>"></script>
