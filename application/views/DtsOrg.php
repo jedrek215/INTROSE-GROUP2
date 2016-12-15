@@ -159,7 +159,7 @@
             echo                '<label>Date Checked:</label> ' . date('M/d/Y g:i:sA',strtotime($data->DateApproved)) . '<br>';
             echo           '</div>';
             echo        '</div>';
-            if($data->SubType == 'Not in GOSM'){
+            if($data->SubType == 'Not in GOSM' && ($data->Stat =='Approved' || $data->Stat == 'Late Approved')){
             echo   '<button type ="button" value="Submit a Form"  id="initial" class="btn btn-success" >Proceed to Initial Submission</button>';
                echo'<script>
                   document.getElementById("initial").onclick = function () {
